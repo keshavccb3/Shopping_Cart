@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeLeaf.org"
+	th:replace="~{base::Layout(~{::section})}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<section>
+		<div class="container mt-5 p-5 mb-5">
+
+			<div class="row" style="margin-bottom: 500px">
+				<div class="col-md-12">
+					<p class="text-center fs-3">My Orders</p>
+					<th:block th:if="${session.succMsg}">
+						<p class="text-success alert alert-success text-center"
+							role="alert">[[${session.succMsg}]]</p>
+						<th:block th:text="${@commonServiceImpl.removeSessionMessage}"></th:block>
+					</th:block>
+					<th:block th:if="${session.errorMsg}">
+						<p class="text-danger alert alert-danger text-center" role="alert">[[${session.errorMsg}]]</p>
+						<th:block th:text="${@commonServiceImpl.removeSessionMessage}"></th:block>
+					</th:block>
+					<th:block th:if="${ordersSize>0}">
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<th scope="col">Order Id</th>
+									<th scope="col">Date</th>
+									<th scope="col">Product Details</th>
+									<th scope="col">Price</th>
+									<th scope="col">Status</th>
+									<th scope="col">Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="o:${orders}">
+									<th scope="row">[[${o.orderId}]]</th>
+									<td>[[${o.orderDate}]]</td>
+									<td>[[${o.product.title}]]</td>
+									<td>Quantity : [[${o.quantity}]]<br>Price :
+										[[${o.price}]]<br>Total Price : [[${o.quantity*o.price}]]
+									</td>
+									<td>[[${o.status}]]</td>
+									<td><th:block th:if="${o.status!='Cancelled'}">
+											<a th:href="@{'/user/update-status?id='+${o.id}+'&st=6'}"
+												class="btn btn-sm btn-danger">Cancel</a>
+										</th:block> <th:block th:unless="${o.status!='Cancelled'}">
+											<a href="#" class="btn btn-sm btn-danger disabled">Cancel</a>
+										</th:block></td>
+
+								</tr>
+
+							</tbody>
+						</table>
+						<div class="row">
+							<div class="col-md-4">Total Order : [[${totalElements}]]</div>
+							<div class="col-md-6">
+								<nav aria-label="Page navigation example">
+									<ul class="pagination">
+										<li class="page-item"><a class="page-link"
+											th:classappend="${isFirst} ? 'disabled' : ''"
+											th:href="@{'/user/user-orders?pageNo=' + ${pageNo - 1}}"
+											aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+										</a></li>
+										<li th:each="i:${#numbers.sequence(1,totalPages)}"
+											class="page-item"><a class="page-link"
+											th:classappend="${pageNo+1==i}?'active':''"
+											th:href="@{'/user/user-orders?pageNo=' + ${i - 1}}">[[${i}]]</a></li>
+
+										<li class="page-item"><a class="page-link"
+											th:classappend="${isLast} ? 'disabled' : ''"
+											th:href="@{'/user/user-orders?pageNo=' + ${pageNo + 1}}"
+											aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+										</a></li>
+									</ul>
+								</nav>
+							</div>
+						</div>
+					</th:block>
+					<th:block th:unless="${ordersSize>0}">
+						<p class="fs-2 text-danger">Empty</p>
+					</th:block>
+				</div>
+
+
+
+			</div>
+		</div>
+	</section>
+
+</body>
+</html>

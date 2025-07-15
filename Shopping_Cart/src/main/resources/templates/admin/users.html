@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeLeaf.org"
+	th:replace="~{base::Layout(~{::section})}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<section>
+		<div class="container-fluid mt-5 p-5" style="margin-bottom: 425px">
+		<a href="/admin/" class="text-decoration-none mb-1"><i class="fa-solid fa-arrow-left-long me-1"></i>Back</a>
+			<div class="card card-sh">
+				<div class="card-header text-center">
+					<p class="fs-4">View product</p>
+					<th:block th:if="${session.succMsg}">
+						<p class="text-success alert alert-success text-center"
+							role="alert">[[${session.succMsg}]]</p>
+						<th:block th:text="${@commonServiceImpl.removeSessionMessage}"></th:block>
+					</th:block>
+					<th:block th:if="${session.errorMsg}">
+						<p class="text-danger alert alert-danger text-center" role="alert">[[${session.errorMsg}]]</p>
+						<th:block th:text="${@commonServiceImpl.removeSessionMessage}"></th:block>
+					</th:block>
+				</div>
+				<div class="card-body">
+					<table class="table">
+						<thead>
+							<tr>
+								<th scope="col">Sl No</th>
+								<th scope="col">Profile</th>
+								<th scope="col">Name</th>
+								<th scope="col">Mobile Number</th>
+								<th scope="col">Email</th>
+								<th scope="col">Address</th>
+								<th scope="col">Status</th>
+								<th scope="col">Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="u,c:${users}">
+								<th scope="row">[[${c.count}]]</th>
+								<td><img th:src="@{'/img/profile_img/'+${u.profileImage}}"
+									width="70px" height="70px"></td>
+								<td>[[${u.name}]]</td>
+								<td>[[${u.mobileNumber}]]</td>
+								<td>[[${u.email}]]</td>
+								<td>[[${u.address+', '+u.city+', '+u.state+',
+									'+u.pincode}]]</td>
+								<td>[[${u.isEnable}]]</td>
+								<td><a
+									th:href="@{'/admin/updateSts?status=true&id='+${u.id}}"
+									class="btn btn-primary btn-sm">Active</a> <a
+									th:href="@{'/admin/updateSts?status=false&id='+${u.id}}"
+									class="btn btn-danger btn-sm">Inactive</a></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

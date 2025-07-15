@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeLeaf.org"
+	th:replace="~{base::Layout(~{::section})}">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<section>
+		<div class="container mt-5 p-5">
+			<a href="/admin/" class="text-decoration-none mb-1"><i
+				class="fa-solid fa-arrow-left-long me-1"></i>Back</a>
+			<div class="row">
+				<div class="col-md-6 offset-md-3 p-2 ">
+					<div class="card shadow p-3 mb-5 bg-body-tertiary rounded">
+						<div class="card-header">
+							<p class="fs-4 text-center">Add Admin</p>
+							<th:block th:if="${session.succMsg}">
+								<p class="text-success alert alert-success text-center"
+									role="alert">[[${session.succMsg}]]</p>
+								<th:block th:text="${@commonServiceImpl.removeSessionMessage}"></th:block>
+							</th:block>
+							<th:block th:if="${session.errorMsg}">
+								<p class="text-danger alert alert-danger text-center"
+									role="alert">[[${session.errorMsg}]]</p>
+								<th:block th:text="${@commonServiceImpl.removeSessionMessage}"></th:block>
+							</th:block>
+						</div>
+						<div class="card-body">
+							<form action="/admin/save-admin" method="POST"
+								enctype="multipart/form-data" id="userRegister" novalidate>
+								<div class="row">
+									<div class="col">
+										<label class="form-Label">Full Name</label> <input required
+											class="form-control" name="name" type="text">
+									</div>
+									<div class="col">
+										<label class="form-Label">Mobile Number</label> <input
+											required class="form-control" name="mobileNumber"
+											type="number">
+									</div>
+
+								</div>
+								<div class="mb-3">
+									<label class="form-Label">Email</label> <input required
+										class="form-control" name="email" type="email">
+								</div>
+								<div class="row">
+									<div class="col">
+										<label class="form-Label">Address</label> <input required
+											class="form-control" name="address" type="text">
+									</div>
+									<div class="col">
+										<label class="form-Label">City</label> <input required
+											class="form-control" name="city" type="text">
+									</div>
+
+								</div>
+								<div class="row">
+									<div class="col">
+										<label class="form-Label">State</label> <input required
+											class="form-control" name="state" type="text">
+									</div>
+									<div class="col">
+										<label class="form-Label">Pincode</label> <input required
+											class="form-control" name="pincode" type="number">
+									</div>
+
+								</div>
+
+								<div class="row">
+									<div class="col">
+										<label class="form-Label">Password</label> <input required
+											class="form-control" name="password" type="password">
+									</div>
+									<div class="col">
+										<label class="form-Label">Confirm Password</label> <input
+											required class="form-control" name="cpassword"
+											type="password">
+									</div>
+
+								</div>
+								<div class="mb-3">
+									<label class="form-Label">Profile Image</label> <input required
+										class="form-control" name="img" type="file">
+								</div>
+
+								<button type="submit"
+									class="btn bg-primary text-white col-md-12">Register</button>
+							</form>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</section>
+
+</body>
+</html>
